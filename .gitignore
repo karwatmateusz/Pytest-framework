@@ -1,0 +1,15 @@
+*.txt
+*.csv
+Scripts
+*.cfg
+!requirements.txt
+Lib/
+.vscode
+venv/
+env/
+.idea/
+.DS_Store
+.vscode
+__pycache__
+allure_result_folder
+*.png
