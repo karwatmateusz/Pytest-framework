@@ -13,3 +13,4 @@ env/
 __pycache__
 allure_result_folder
 *.png
+*.log
