@@ -3,6 +3,6 @@ import pytest
 
 @pytest.fixture(scope="session", autouse=True)
 def suite_starting():
-    print("\n****** Regression suite started ******")
+    print("\nRegression suite started")
     yield
-    print("\n****** Regression suite finished ******")
+    print("\nRegression suite finished")
