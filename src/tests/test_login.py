@@ -1,8 +1,8 @@
 import pytest
 import allure
-from src.ATframework.utilities.BaseTestClass import BaseTestClass
-from src.ATframework.pages.LoginPage import LoginPage
-from utilities.logger import Logger
+from utilities.BaseTestClass import BaseTestClass
+from pages.LoginPage import LoginPage
+from utilities.Logger import Logger
 import logging
 
 

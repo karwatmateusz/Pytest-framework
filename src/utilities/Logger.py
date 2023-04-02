@@ -10,8 +10,8 @@ def Logger(logLevel):
     logger.setLevel(logging.DEBUG)
 
     fileHandler = logging.FileHandler(
-        filename=f"logs__{datetime.today().strftime('%m-%d_%H-%M')}.log",
-        mode="w",
+        filename=f"logs/logs__{datetime.today().strftime('%m-%d_%H-%M')}.log",
+        mode="a",
     )
 
     fileHandler.setLevel(logLevel)

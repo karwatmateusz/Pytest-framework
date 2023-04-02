@@ -1,5 +1,5 @@
 import pytest
-from utilities.logger import Logger
+from utilities.Logger import Logger
 import logging
 
 
