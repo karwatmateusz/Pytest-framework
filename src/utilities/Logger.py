@@ -7,7 +7,7 @@ def Logger(logLevel):
 
     loggerName = inspect.stack()[1][3]
     logger = logging.getLogger(loggerName)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logLevel)
 
     fileHandler = logging.FileHandler(
         filename=f"logs/logs__{datetime.today().strftime('%m-%d_%H-%M')}.log",

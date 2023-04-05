@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session", autouse=False)
 def suite_starting():
     print("\nRegression suite started")
     yield
