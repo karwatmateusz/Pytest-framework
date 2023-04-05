@@ -1,6 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from utilities.locator import Locator
+from utilities.Locator import Locator
 
 
 class BaseElement:

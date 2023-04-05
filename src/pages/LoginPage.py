@@ -2,7 +2,7 @@ from utilities.BasePageClass import BasePageClass
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from utilities.BaseElementClass import BaseElement
-from utilities.locator import Locator
+from utilities.Locator import Locator
 
 
 class LoginPage(BasePageClass):
