@@ -12,5 +12,5 @@ env/
 .vscode
 __pycache__
 allure_result_folder
-*.png
-*.log
+src/screenshots
+src/logs
