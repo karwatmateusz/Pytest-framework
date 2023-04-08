@@ -12,7 +12,7 @@ class TestAlert(BaseTestClass):
     log = Logger(logging.DEBUG)
     input_text = "Input field text"
 
-    # @pytest.mark.alert
+    @pytest.mark.alert
     def test_alert_box(self):
         alert_page = AlertPage(self.driver)
         alert_page.go()
@@ -23,7 +23,7 @@ class TestAlert(BaseTestClass):
             f"Alert test failed, text: {result_text}"
         )
 
-    # @pytest.mark.alert
+    @pytest.mark.alert
     def test_confirm_box_ok(self):
         alert_page = AlertPage(self.driver)
         alert_page.go()
@@ -34,7 +34,7 @@ class TestAlert(BaseTestClass):
             f"OK confirm alert test failed, text: {result_text}"
         )
 
-    # @pytest.mark.alert
+    @pytest.mark.alert
     def test_confirm_box_cancel(self):
         alert_page = AlertPage(self.driver)
         alert_page.go()
@@ -64,7 +64,6 @@ class TestAlert(BaseTestClass):
         alert_page.open_prompt_box()
         alert_page.confirm_alert()
         result_text = alert_page.get_result_box_text()
-        print(f"result text to {result_text}")
         assert "You entered:" == result_text, self.log.error(
             f"Prompt alert test with empty input failed, text: {result_text}"
         )
@@ -74,6 +73,7 @@ class TestAlert(BaseTestClass):
         alert_page = AlertPage(self.driver)
         alert_page.go()
         alert_page.open_prompt_box()
+        alert_page.alert_input(self.input_text)
         alert_page.cancel_alert()
         result_text = alert_page.get_result_box_text()
         assert "null" in result_text, self.log.error(
