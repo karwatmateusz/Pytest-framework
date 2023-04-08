@@ -92,7 +92,7 @@ def browser(request):
 
 @pytest.fixture(scope="class")
 def headless_mode(request):
-    if request.config.getoption("--headless") == "True":
+    if request.config.getoption("--headless").lower() == "true":
         options = Options()
         options.add_argument("--headless=new")
         return options
