@@ -9,6 +9,10 @@ class BaseElement:
         self.locator = locator
         self.element = self.element_is_visible(self.locator)
 
+    def __getattr__(self, item):
+        if hasattr(self.element, item):
+            return getattr(self.element, item)
+
     def insert_text(self, text):
         self.element.send_keys(text)
 
