@@ -12,3 +12,6 @@ class BasePageClass:
     def go(self):
         # add wait for page loading
         self.driver.get(self._URL)
+
+    def get_page_url(self):
+        return self.driver.current_url

@@ -39,4 +39,4 @@ class AlertPage(BasePageClass):
 
     def get_result_box_text(self):
         result_box = BaseElement(self.driver, self.result_box)
-        return result_box.text
+        return result_box.get_text()
