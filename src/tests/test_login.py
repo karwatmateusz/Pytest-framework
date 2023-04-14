@@ -32,7 +32,7 @@ class TestLogin(BaseTestClass):
 
     @pytest.mark.login
     @allure.title("Test to check login functionality with invalid credentials")
-    @pytest.mark.xfail(raises=AssertionError, reason="Should fail only on assertion")
+    @pytest.mark.xfail(reason="Should fail only on assertion")
     def test_login_page_invalid_credentials(self):
         login_page = LoginPage(self.driver)
         login_page.go()

@@ -16,15 +16,15 @@ class AlertPage(BasePageClass):
 
     def open_alert_box(self):
         alert_button = BaseElement(self.driver, self.alert_button_locator)
-        alert_button.click_field()
+        alert_button.click_element()
 
     def open_confirm_box(self):
         confirm_button = BaseElement(self.driver, self.confirm_button_locator)
-        confirm_button.click_field()
+        confirm_button.click_element()
 
     def open_prompt_box(self):
         prompt_button = BaseElement(self.driver, self.prompt_button_locator)
-        prompt_button.click_field()
+        prompt_button.click_element()
 
     def alert_input(self, text):
         alert = self.driver.switch_to.alert

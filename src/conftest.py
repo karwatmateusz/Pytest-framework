@@ -34,7 +34,7 @@ def driver_setup(request, browser, headless_mode):
         print("\nBrowser up and running")
         yield
         print("\nTesting finished \nClosing browser")
-        # driver.close()
+        driver.close()
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
