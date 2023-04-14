@@ -36,14 +36,31 @@ class FormPage(BasePageClass):
     radio_button_to_select = "Public Show"
 
     def fill_mandatory_fields(self):
-        first_name = BaseElement(self.driver, self.FIRST_NAME_LOCATOR)
-        first_name.insert_text(self.user_first_name)
-        last_name = BaseElement(self.driver, self.LAST_NAME_LOCATOR)
-        last_name.insert_text(self.user_last_name)
-        email = BaseElement(self.driver, self.EMAIL_LOCATOR)
-        email.insert_text(self.user_email)
-        subject = BaseElement(self.driver, self.SUBJECT_LOCATOR)
-        subject.insert_text(self.user_subject)
+        # first_name = BaseElement(self.driver, self.FIRST_NAME_LOCATOR)
+        # first_name.insert_text(self.user_first_name)
+        # last_name = BaseElement(self.driver, self.LAST_NAME_LOCATOR)
+        # last_name.insert_text(self.user_last_name)
+        # email = BaseElement(self.driver, self.EMAIL_LOCATOR)
+        # email.insert_text(self.user_email)
+        # subject = BaseElement(self.driver, self.SUBJECT_LOCATOR)
+        # subject.insert_text(self.user_subject)
+
+        field_locators = {
+            "first_name": self.FIRST_NAME_LOCATOR,
+            "last_name": self.LAST_NAME_LOCATOR,
+            "email": self.EMAIL_LOCATOR,
+            "subject": self.SUBJECT_LOCATOR,
+        }
+
+        field_values = {
+            "first_name": self.user_first_name,
+            "last_name": self.user_last_name,
+            "email": self.user_email,
+            "subject": self.user_subject,
+        }
+        for field_name, locator in field_locators.items():
+            field = BaseElement(self.driver, locator)
+            field.insert_text(field_values[field_name])
 
     def fill_non_mandatory_fields(self):
         message = BaseElement(self.driver, self.MESSAGE_LOCATOR)
