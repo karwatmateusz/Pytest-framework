@@ -1,33 +1,64 @@
+from typing import List
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utilities.Locator import Locator
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from utilities.Logger import Logger
+import logging
+from selenium.common.exceptions import (
+    TimeoutException,
+    NoSuchElementException,
+    InvalidElementStateException,
+)
 
 
 class BaseElement:
+
+    logger = Logger(logging.DEBUG)
+
     def __init__(self, driver, locator) -> None:
         self.driver = driver
         self.locator = locator
         self.element = self.is_element_present()
+        self.logger.info(f"Element {self.locator} found")
 
     def insert_text(self, text):
         # self.element.clear()
         self.element.send_keys(text)
+        self.logger.info(f"Inserting text '{text}' into element {self.locator}")
 
     def click_element(self):
         try:
             # self.driver.execute_script("arguments[0].scrollIntoView(true);", self.element)
             self.element.location_once_scrolled_into_view
             self.is_element_clickable().click()
+            self.logger.info(f"Clicking element {self.locator}")
             # self.element.click()
         except TimeoutException as e:
             raise TimeoutException(f"Element {self.locator} not clickable") from e
 
     def clear_field(self):
-        self.element.clear()
+        try:
+            self.element.clear()
+        except InvalidElementStateException as e:
+            self.logger.error(
+                f"Element {self.locator} is not currently interactable and may not be manipulated"
+            )
+            raise InvalidElementStateException(
+                f"Element {self.locator} not interactable"
+            ) from e
 
     def get_text(self):
+        self.is_element_visible()
         return self.element.text
+
+    def get_all_elements(self) -> List[WebElement]:
+        elements = WebDriverWait(self.driver, timeout=5).until(
+            EC.presence_of_all_elements_located(
+                (self.locator.method, self.locator.location)
+            )
+        )
+        return elements
 
     def is_selected(self):
         return self.element.is_selected()
@@ -35,8 +66,10 @@ class BaseElement:
     def is_visible(self):
         try:
             self.is_element_visible()
+            self.logger.info(f"Element {self.locator} is visible")
             return True
         except TimeoutException:
+            self.logger.error(f"Element {self.locator} is not visible")
             return False
 
     def is_element_present(self):
@@ -54,7 +87,9 @@ class BaseElement:
     def is_element_visible(self):
         try:
             self.is_element_present()
-            return self.element.is_displayed()
+            return WebDriverWait(self.driver, timeout=5).until(
+                EC.visibility_of(self.element)
+            )
         except TimeoutException:
             return False
 

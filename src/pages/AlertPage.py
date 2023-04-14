@@ -1,6 +1,5 @@
 from utilities.BasePageClass import BasePageClass
 from selenium.webdriver.common.by import By
-from selenium import webdriver
 from utilities.BaseElementClass import BaseElement
 from utilities.Locator import Locator
 from selenium.webdriver.common.alert import Alert

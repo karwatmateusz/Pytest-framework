@@ -15,3 +15,20 @@ class TestForm(BaseTestClass):
         form_page.go()
         form_page.fill_mandatory_fields()
         form_page.submit_form()
+        assert "Thank you" in form_page.get_success_message()
+
+    @pytest.mark.form
+    def test_empty_mandatory_field(self):
+        form_page = FormPage(self.driver)
+        form_page.go()
+        form_page.fill_non_mandatory_fields()
+        form_page.submit_form()
+        assert "Your form has encountered a problem" in form_page.get_error_message()
+
+    @pytest.mark.form
+    def test_all_fields_filled(self):
+        form_page = FormPage(self.driver)
+        form_page.go()
+        form_page.fill_mandatory_fields()
+        form_page.fill_non_mandatory_fields()
+        assert "Thank you" in form_page.get_success_message()
