@@ -79,6 +79,7 @@ class FormPage(BasePageClass):
             if elem.text == self.radio_button_to_select:
                 elem.click()
                 break
+        # TODO -> add handling of dropdown/survey options and change selection to random element
 
     def submit_form(self):
         submit_button = BaseElement(self.driver, self.SUBMIT_BUTTON_LOCATOR)
