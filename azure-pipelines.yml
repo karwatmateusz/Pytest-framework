@@ -35,3 +35,9 @@ steps:
 - script: 
     pytest -m login
   displayName: 'Run Selenium tests with marker "login"'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'XUnit'
+    testResultsFiles: '**/TEST-*.xml'
+  displayName: 'Publish test results'
