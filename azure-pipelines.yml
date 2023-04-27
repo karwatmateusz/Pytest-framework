@@ -20,7 +20,6 @@ steps:
 - script:
     python -m venv env
     env/scripts/activate
-    python -m pip install --upgrade pip
     pip install -r requirements.txt
     pip install pytest pytest-azurepipelines
     pytest -m azure
