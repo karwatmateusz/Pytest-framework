@@ -29,15 +29,14 @@ steps:
 
 - script:
     pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+  displayName: 'Install pytest-azurepipelines'
 
 - script: 
-    pytest -m login
-  displayName: 'Run Selenium tests with marker "login"'
+    pytest -m azure -v -s --browser=None
+  displayName: 'Run Selenium tests with marker "azure"'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'XUnit'
-    testResultsFiles: '**/TEST-*.xml'
-  displayName: 'Publish test results'
+# - task: PublishTestResults@2
+#   inputs:
+#     testResultsFormat: 'XUnit'
+#     testResultsFiles: '**/TEST-*.xml'
+#   displayName: 'Publish test results'
