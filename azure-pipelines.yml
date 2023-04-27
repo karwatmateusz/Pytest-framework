@@ -31,9 +31,16 @@ steps:
     pip install pytest pytest-azurepipelines
   displayName: 'Install pytest-azurepipelines'
 
-- script: 
-    pytest -m azure -v -s --browser=None
-  displayName: 'Run Selenium tests with marker "azure"'
+# - script: 
+#     pytest -m azure -v -s --browser=None
+#   displayName: 'Run Selenium tests with marker "azure"'
+
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: 'pytest -m azure'
+    arguments: '--browser=None' 
+
 
 # - task: PublishTestResults@2
 #   inputs:
