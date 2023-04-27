@@ -17,30 +17,14 @@ steps:
     versionSpec: '3.7'
   displayName: 'Use Python 3.7'
 
-# - script:
-#     python -m venv env
-#     env/scripts/activate
-#     python -m pip install --upgrade pip
-#   displayName: 'Install tools'
-
-- script: 
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
-
 - script:
+    python -m venv env
+    env/scripts/activate
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
     pip install pytest pytest-azurepipelines
-  displayName: 'Install pytest-azurepipelines'
-
-# - script: 
-#     pytest -m azure -v -s --browser=None
-#   displayName: 'Run Selenium tests with marker "azure"'
-
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'inline'
-    script: 'pytest -m azure'
-    arguments: '--browser=None' 
-
+    pytest -m azure
+  displayName: 'Install tools'
 
 # - task: PublishTestResults@2
 #   inputs:
