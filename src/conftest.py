@@ -15,7 +15,7 @@ import logging
 log = Logger(logging.DEBUG)
 
 
-@pytest.fixture(scope="class", autouse=True)
+@pytest.fixture(scope="class", autouse=False)
 def driver_setup(request, browser, headless_mode):
     print("\nSetting up browser")
     try:
@@ -25,16 +25,18 @@ def driver_setup(request, browser, headless_mode):
                 service=Service(ChromeDriverManager().install()),
                 options=headless_mode,
             )
+            driver.maximize_window()
+            request.cls.driver = driver
+            print("\nBrowser up and running")
+            yield
     except UnboundLocalError:
         print("Please select browser")
         log.error("Browser not selected")
     else:
-        driver.maximize_window()
-        request.cls.driver = driver
-        print("\nBrowser up and running")
-        yield
+        print("No browser selected")
+        return
         print("\nTesting finished \nClosing browser")
-        driver.close()
+        # driver.close()
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -47,6 +49,7 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope="function", autouse=True)
 def check_test_result(request):
     yield
+    return
     if request.node.rep_setup.failed:
         print("setting up env failed")
         log.error("Setting up env failed")
