@@ -24,7 +24,11 @@ steps:
   displayName: 'Install tools'
 
 - script: 
+    echo  '$(System.DefaultWorkingDirectory)'
+    dir  
   workingDirectory: src
+    echo  '$(System.DefaultWorkingDirectory)'
+    dir
     pytest -m azure
   displayName: 'start tests'
 
