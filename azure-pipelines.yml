@@ -26,9 +26,3 @@ steps:
 - script: 
     pytest -m azure
   displayName: 'start tests'
-
-# - task: PublishTestResults@2
-#   inputs:
-#     testResultsFormat: 'XUnit'
-#     testResultsFiles: '**/TEST-*.xml'
-#   displayName: 'Publish test results'
