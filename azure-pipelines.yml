@@ -41,7 +41,6 @@ steps:
     script: |
       echo  '$(System.DefaultWorkingDirectory)'
       dir
-      dir subfoldername
     workingDirectory: $(Build.SourcesDirectory)/src/
 
 
