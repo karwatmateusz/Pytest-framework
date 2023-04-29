@@ -12,7 +12,7 @@ from utilities.Logger import Logger
 import logging
 
 
-log = Logger(logging.DEBUG)
+# log = Logger(logging.DEBUG)
 
 
 # @pytest.fixture(scope="class", autouse=True)
@@ -60,14 +60,14 @@ log = Logger(logging.DEBUG)
 #         attach_screenshot_to_report(file_name)
 
 
-def take_screenshot(driver, file_name):
-    driver.save_screenshot(file_name)
-    log.info(f"Screenshot {file_name} taken")
+# def take_screenshot(driver, file_name):
+#     driver.save_screenshot(file_name)
+#     log.info(f"Screenshot {file_name} taken")
 
 
-def attach_screenshot_to_report(file_name):
-    allure.attach.file(file_name, attachment_type=allure.attachment_type.PNG)
-    log.info(f"Screenshot {file_name} attached to the report")
+# def attach_screenshot_to_report(file_name):
+#     allure.attach.file(file_name, attachment_type=allure.attachment_type.PNG)
+#     log.info(f"Screenshot {file_name} attached to the report")
 
 
 def pytest_addoption(parser):
