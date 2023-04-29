@@ -22,7 +22,7 @@ steps:
     env/scripts/activate
     pip install -r requirements.txt
     pip install pytest pytest-azurepipelines
-    pytest -m azure
+    pytest
   displayName: 'Install tools'
 
 # - task: PublishTestResults@2
