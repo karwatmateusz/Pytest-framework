@@ -32,6 +32,16 @@ steps:
       echo "Build.SourcesDirectory:"
       echo "$(Build.SourcesDirectory)"
 
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo  '$(System.DefaultWorkingDirectory)'
+      dir
+      dir subfoldername
+    workingDirectory: /s/src/
+
+
 - script:
     python -m pip install --upgrade pip
     pip install -r requirements.txt
@@ -39,6 +49,7 @@ steps:
   displayName: 'Install tools'
 
 - script: 
+
     pytest -m azure
-  workingDirectory: /src/
+  workingDirectory: /s/src/
   displayName: 'start tests'
