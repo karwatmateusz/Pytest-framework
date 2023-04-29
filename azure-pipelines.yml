@@ -23,6 +23,11 @@ steps:
     pip install pytest pytest-azurepipelines
   displayName: 'Install tools'
 
+- script: 
+    cd src
+    pytest -m azure
+  displayName: 'start tests'
+
 # - task: PublishTestResults@2
 #   inputs:
 #     testResultsFormat: 'XUnit'
