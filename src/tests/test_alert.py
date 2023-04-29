@@ -8,7 +8,6 @@ from pages.AlertPage import AlertPage
 
 
 class TestAlert(BaseTestClass):
-
     log = Logger(logging.DEBUG)
     input_text = "Input field text"
 

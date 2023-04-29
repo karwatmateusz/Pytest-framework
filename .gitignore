@@ -13,4 +13,4 @@ env/
 __pycache__
 allure_result_folder
 src/screenshots
-src/logs
+.log
