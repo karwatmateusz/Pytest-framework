@@ -1,0 +1,1 @@
+Folder to store logs during running the test suite
