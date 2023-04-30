@@ -29,14 +29,16 @@ def driver_setup(request, browser, headless_mode):
             request.cls.driver = driver
             print("\nBrowser up and running")
             yield
+            print("\nTesting finished \nClosing browser")
+            driver.close()
+        else:
+            print("No browser selected")
+            log.warning("No browser selected")
+            return
     except UnboundLocalError:
         print("Please select browser")
         log.error("Browser not selected")
-    else:
-        print("No browser selected")
         return
-        print("\nTesting finished \nClosing browser")
-        # driver.close()
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -49,7 +51,6 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope="function", autouse=True)
 def check_test_result(request):
     yield
-    return
     if request.node.rep_setup.failed:
         print("setting up env failed")
         log.error("Setting up env failed")

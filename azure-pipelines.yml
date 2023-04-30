@@ -24,5 +24,5 @@ steps:
   displayName: 'Install tools'
 
 - script: 
-    pytest -m azure
+    pytest
   displayName: 'start tests'
