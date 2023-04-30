@@ -17,6 +17,33 @@ steps:
     versionSpec: '3.7'
   displayName: 'Use Python 3.7'
 
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "Structure of work folder of this pipeline:"
+      tree $(Agent.WorkFolder)/1
+
+      echo "System.DefaultWorkingDirectory"
+      echo "$(System.DefaultWorkingDirectory)"
+
+      echo "Build.ArtifactStagingDirectory:" 
+      echo "$(Build.ArtifactStagingDirectory)"
+
+      echo "Build.BinariesDirectory:" 
+      echo "$(Build.BinariesDirectory)"
+
+      echo "Build.SourcesDirectory:"
+      echo "$(Build.SourcesDirectory)"
+
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo  '$(System.DefaultWorkingDirectory)'
+      dir
+    workingDirectory: $(Build.SourcesDirectory)/src/
+
+
 - script:
     python -m pip install --upgrade pip
     pip install -r requirements.txt
@@ -25,4 +52,5 @@ steps:
 
 - script: 
     pytest
+  workingDirectory: $(Build.SourcesDirectory)/src/
   displayName: 'start tests'
