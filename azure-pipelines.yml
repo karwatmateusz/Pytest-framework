@@ -48,7 +48,7 @@ steps:
       python -m pip install --upgrade pip
       pip install -r requirements.txt
       pip install pytest pytest-azurepipelines
-    workingDirectory: $(Build.SourcesDirectory)/src/
+    workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Install tools'
 
 - script: 
