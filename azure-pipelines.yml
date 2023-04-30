@@ -42,15 +42,16 @@ steps:
       dir
     workingDirectory: $(Build.SourcesDirectory)/src/
 
-
-- script:
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    pip install pytest pytest-azurepipelines
+- task: CmdLine@2
+  inputs:
+    script:
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+      pip install pytest pytest-azurepipelines
+    workingDirectory: $(Build.SourcesDirectory)/src/
   displayName: 'Install tools'
 
 - script: 
-    tree $(Agent.WorkFolder)
     pytest
   workingDirectory: $(Build.SourcesDirectory)/src/
   displayName: 'start tests'
