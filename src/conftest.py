@@ -6,6 +6,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Chrome
 from webdriver_manager.chrome import ChromeDriverManager
+
+from selenium.webdriver.chrome.options import Options
 from utilities.Logger import Logger
 import logging
 
@@ -13,16 +15,30 @@ import logging
 log = Logger(logging.DEBUG)
 
 
-@pytest.fixture(scope="class", autouse=True)
-def driver_setup(request):
+@pytest.fixture(scope="class", autouse=False)
+def driver_setup(request, browser, headless_mode):
     print("\nSetting up browser")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    driver.maximize_window()
-    request.cls.driver = driver
-    print("Browser up and running")
-    yield
-    print("\nTesting finished, closing browser")
-    driver.close()
+    try:
+        if browser == "chrome":
+            log.info(f"Initializing {browser}, headless_mode={headless_mode}")
+            driver = Chrome(
+                service=Service(ChromeDriverManager().install()),
+                options=headless_mode,
+            )
+            driver.maximize_window()
+            request.cls.driver = driver
+            print("\nBrowser up and running")
+            yield
+            print("\nTesting finished \nClosing browser")
+            driver.close()
+        else:
+            print("No browser selected")
+            log.warning("No browser selected")
+            return
+    except UnboundLocalError:
+        print("Please select browser")
+        log.error("Browser not selected")
+        return
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -65,11 +81,33 @@ def pytest_addoption(parser):
         default="chrome",
         help="Currently available option: chrome",
     )
+    parser.addoption(
+        "--headless",
+        action="store",
+        default="False",
+        help="Run in headless mode? True or False",
+    )
 
 
 @pytest.fixture(scope="class")
-def browser_selected(request):
+def browser(request):
     return request.config.getoption("--browser")
 
 
-# TO DO: add fixture to run headlessly or not
+@pytest.fixture(scope="class")
+def headless_mode(request):
+    if request.config.getoption("--headless").lower() == "true":
+        options = Options()
+        options.add_argument("--headless=new")
+        return options
+    else:
+        return None
+
+
+# Move all config parameters to one function?
+@pytest.fixture
+def config_params(request):
+    config_params = {}
+    config_params["browser"] = request.config.getoption("--browser")
+    config_params["headless"] = request.config.getoption("--headless")
+    return config_params

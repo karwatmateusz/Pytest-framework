@@ -4,7 +4,6 @@ from datetime import datetime
 
 
 def Logger(logLevel):
-
     loggerName = inspect.stack()[1][3]
     logger = logging.getLogger(loggerName)
     logger.setLevel(logLevel)

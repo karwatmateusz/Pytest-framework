@@ -11,8 +11,9 @@ class TestLogin(BaseTestClass):
     valid_credentials = ["tomsmith", "SuperSecretPassword!"]
     invalid_credentials = ["test", "test"]
 
-    @pytest.mark.login2
-    @allure.title("This test has a custom title")
+
+    @pytest.mark.login
+    @allure.title("Test to check login functionality with valid credentials")
     def test_login_page_valid_credentials(self):
         login_page = LoginPage(self.driver)
         login_page.go()
@@ -27,9 +28,10 @@ class TestLogin(BaseTestClass):
             self.log.error(
                 f"User not logged in with credentials: username - {self.valid_credentials[0]}, password - {self.valid_credentials[1]}"
             )
-            raise AssertionError("User should log in")
+            pytest.fail("User should log in")
 
     @pytest.mark.login
+    @allure.title("Test to check login functionality with invalid credentials")
     @pytest.mark.xfail(reason="Should fail only on assertion")
     def test_login_page_invalid_credentials(self):
         login_page = LoginPage(self.driver)
@@ -39,6 +41,7 @@ class TestLogin(BaseTestClass):
         # login_page.login_button_click()
         login_page.login_to_system(self.valid_credentials[0], self.valid_credentials[1])
         # assert login_page.is_user_logged(), "User logged in"
+
         if login_page.is_error_message_visible():
             self.log.info(f"User correctly not logged in with invalid credentials")
             raise AssertionError("User correctly not logged in")
