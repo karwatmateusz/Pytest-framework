@@ -50,6 +50,7 @@ steps:
   displayName: 'Install tools'
 
 - script: 
+    tree $(Agent.WorkFolder)
     pytest
   workingDirectory: $(Build.SourcesDirectory)/src/
   displayName: 'start tests'
