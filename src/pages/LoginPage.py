@@ -23,7 +23,7 @@ class LoginPage(BasePageClass):
 
     def login_button_click(self):
         login_button = BaseElement(self.driver, self.login_locator)
-        login_button.click_field()
+        login_button.click_element()
 
     def login_to_system(self, username, password):
         self.username_input(username)
@@ -40,6 +40,3 @@ class LoginPage(BasePageClass):
             return False
         else:
             return True
-
-    def get_page_url(self):
-        return self.driver.current_url
