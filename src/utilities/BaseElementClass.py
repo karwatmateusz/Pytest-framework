@@ -13,7 +13,6 @@ from selenium.common.exceptions import (
 
 
 class BaseElement:
-
     logger = Logger(logging.DEBUG)
 
     def __init__(self, driver, locator) -> None:
@@ -57,18 +56,8 @@ class BaseElement:
             EC.presence_of_all_elements_located(
                 (self.locator.method, self.locator.location)
             )
+        )
         return elements
-                
-    def is_element_visible(self, locator):
-        return WebDriverWait(self.driver, timeout=5).until(
-            EC.visibility_of_element_located((locator.method, locator.location))
-        )
-
-    def is_element_clickable(self, locator):
-        return WebDriverWait(self.driver, timeout=5).until(
-            EC.element_to_be_clickable((locator.method, locator.location))
-        )
-
 
     def is_selected(self):
         return self.element.is_selected()
