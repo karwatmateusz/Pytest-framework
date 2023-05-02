@@ -15,7 +15,7 @@ import logging
 log = Logger(logging.DEBUG)
 
 
-@pytest.fixture(scope="class", autouse=True)
+@pytest.fixture(scope="class", autouse=False)
 def driver_setup(request, browser, headless_mode):
     print("\nSetting up browser")
     try:
@@ -25,16 +25,20 @@ def driver_setup(request, browser, headless_mode):
                 service=Service(ChromeDriverManager().install()),
                 options=headless_mode,
             )
+            driver.maximize_window()
+            request.cls.driver = driver
+            print("\nBrowser up and running")
+            yield
+            print("\nTesting finished \nClosing browser")
+            driver.close()
+        else:
+            print("No browser selected")
+            log.warning("No browser selected")
+            return
     except UnboundLocalError:
         print("Please select browser")
         log.error("Browser not selected")
-    else:
-        driver.maximize_window()
-        request.cls.driver = driver
-        print("\nBrowser up and running")
-        yield
-        print("\nTesting finished \nClosing browser")
-        driver.close()
+        return
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)

@@ -7,7 +7,6 @@ import logging
 
 
 class TestLogin(BaseTestClass):
-
     log = Logger(logging.DEBUG)
     valid_credentials = ["tomsmith", "SuperSecretPassword!"]
     invalid_credentials = ["test", "test"]
@@ -16,6 +15,7 @@ class TestLogin(BaseTestClass):
     def setup_method(self):
         self.login_page = LoginPage(self.driver)
         self.login_page.go()
+
 
     @pytest.mark.login
     @allure.title("Test to check login functionality with valid credentials")
@@ -42,13 +42,12 @@ class TestLogin(BaseTestClass):
         # login_page.username_input(self.invalid_credentials[0])
         # login_page.password_input(self.invalid_credentials[1])
         # login_page.login_button_click()
-        self.login_page.login_to_system(
-            self.invalid_credentials[0], self.invalid_credentials[1]
-        )
+        self.login_page.login_to_system(self.valid_credentials[0], self.valid_credentials[1])
         # assert login_page.is_user_logged(), "User logged in"
-        if not self.login_page.is_user_logged():
+
+        if self.login_page.is_error_message_visible():
             self.log.info(f"User correctly not logged in with invalid credentials")
-            pytest.fail("User correctly not logged in")
+            raise AssertionError("User correctly not logged in")
         else:
             self.log.error(
                 f"User logged in with credentials: username - {self.invalid_credentials[0]}, password - {self.invalid_credentials[1]}"

@@ -1,0 +1,57 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool: test
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.7'
+  displayName: 'Use Python 3.7'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "Structure of work folder of this pipeline:"
+      tree $(Agent.WorkFolder)/1
+
+      echo "System.DefaultWorkingDirectory"
+      echo "$(System.DefaultWorkingDirectory)"
+
+      echo "Build.ArtifactStagingDirectory:" 
+      echo "$(Build.ArtifactStagingDirectory)"
+
+      echo "Build.BinariesDirectory:" 
+      echo "$(Build.BinariesDirectory)"
+
+      echo "Build.SourcesDirectory:"
+      echo "$(Build.SourcesDirectory)"
+
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo  '$(System.DefaultWorkingDirectory)'
+      dir
+    workingDirectory: $(Build.SourcesDirectory)/src/
+
+- task: CmdLine@2
+  inputs:
+    script:
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+      pip install pytest pytest-azurepipelines
+    workingDirectory: $(Build.SourcesDirectory)
+  displayName: 'Install tools'
+
+- script: 
+    pytest
+  workingDirectory: $(Build.SourcesDirectory)/src/
+  displayName: 'start tests'
