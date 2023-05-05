@@ -5,7 +5,6 @@ from utilities.BaseElementClass import BaseElement
 
 
 class BasePageClass:
-
     _URL = None
 
     def __init__(self, driver):

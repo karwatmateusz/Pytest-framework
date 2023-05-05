@@ -15,7 +15,7 @@ import logging
 log = Logger(logging.DEBUG)
 
 
-@pytest.fixture(scope="class", autouse=False)
+@pytest.fixture(autouse=True)
 def driver_setup(request, browser, headless_mode):
     print("\nSetting up browser")
     try:
@@ -28,9 +28,8 @@ def driver_setup(request, browser, headless_mode):
             driver.maximize_window()
             request.cls.driver = driver
             print("\nBrowser up and running")
-            yield
-            print("\nTesting finished \nClosing browser")
-            # driver.close()
+            yield driver
+            print("\nTesting finished")
         else:
             print("No browser selected")
             log.warning("No browser selected")
@@ -62,6 +61,11 @@ def check_test_result(request):
         file_name = f'screenshots/{request.node.name}_{datetime.today().strftime("%Y-%m-%d_%H-%M")}.png'
         take_screenshot(driver, file_name)
         attach_screenshot_to_report(file_name)
+
+    driver = getattr(request.cls, "driver", None)
+    if driver is not None:
+        driver.close()
+        print("\nBrowser closed")
 
 
 def take_screenshot(driver, file_name):

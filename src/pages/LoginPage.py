@@ -7,11 +7,13 @@ from selenium.common.exceptions import TimeoutException
 
 
 class LoginPage(BasePageClass):
-    _URL = "https://the-internet.herokuapp.com/login"
-    username_locator = Locator("#username")
-    password_locator = Locator("#password")
-    login_locator = Locator("#login > button")
-    error_message_locator = Locator("div > .error")
+    _URL = "https://automationintesting.online/#/admin"
+    username_locator = Locator("input[data-testid='username']")
+    password_locator = Locator("input[data-testid='password']")
+    login_locator = Locator("button[data-testid='submit']")
+    error_border_username = Locator("input[style*='red'][data-testid='username']")
+    error_border_password = Locator("input[style*='red'][data-testid='password']")
+    room_listing_locator = Locator("div[data-testid='roomlisting']")
 
     def username_input(self, username):
         username_field = BaseElement(self.driver, self.username_locator)
@@ -31,12 +33,10 @@ class LoginPage(BasePageClass):
         self.login_button_click()
 
     def is_user_logged(self):
-        return "secure" in self.get_page_url()
+        return BaseElement(self.driver, self.room_listing_locator).is_visible()
 
-    def is_error_message_visible(self):
+    def is_error_border_visible(self):
         try:
-            BaseElement(self.driver, self.error_message_locator)
+            return BaseElement(self.driver, self.error_border_username).is_visible()
         except TimeoutException as e:
             return False
-        else:
-            return True
