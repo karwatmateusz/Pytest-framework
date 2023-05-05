@@ -30,7 +30,7 @@ def driver_setup(request, browser, headless_mode):
             print("\nBrowser up and running")
             yield
             print("\nTesting finished \nClosing browser")
-            driver.close()
+            # driver.close()
         else:
             print("No browser selected")
             log.warning("No browser selected")
