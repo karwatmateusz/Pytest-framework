@@ -64,7 +64,7 @@ def check_test_result(request):
 
     driver = getattr(request.cls, "driver", None)
     if driver is not None:
-        driver.close()
+        # driver.close()
         print("\nBrowser closed")
 
 

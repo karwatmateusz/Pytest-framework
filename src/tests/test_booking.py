@@ -42,7 +42,7 @@ class TestBooking(BaseTestClass):
         self.bookingPage.submit_contact_form()
         assert self.bookingPage.is_form_submitted_successfully()
 
-    @pytest.mark.booking
+    @pytest.mark.booking2
     @pytest.mark.regression
     def test_user_can_book_room(self):
         self.bookingPage.open_room_information()
@@ -52,5 +52,6 @@ class TestBooking(BaseTestClass):
             email=self.email,
             phone=self.phone_number,
         )
+        self.bookingPage.select_booking_days()
         self.bookingPage.submit_booking_form()
-        # assert self.bookingPage.is_booking_created_successfully() TODO: uncomment once "select_booking_days()" is finished
+        assert self.bookingPage.is_booking_created_successfully()
