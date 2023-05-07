@@ -2,6 +2,8 @@ from utilities.BasePageClass import BasePageClass
 from utilities.BaseElementClass import BaseElement
 from utilities.Locator import Locator
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from datetime import datetime
 
 
 class BookingPage(BasePageClass):
@@ -21,6 +23,10 @@ class BookingPage(BasePageClass):
     input_booking_email_locator = Locator("input[aria-label='Email']")
     input_booking_phone_locator = Locator("input[aria-label='Phone']")
     booking_successful_popup = Locator(".ReactModal__Content")
+    from_date_locator = Locator("div.rbc-today")
+    to_date_locator = Locator(
+        method=By.XPATH, location="//div[contains(@class, 'rbc-day-bg')]"
+    )
 
     """CONTACT FORM LOCATORS"""
     input_name_locator = Locator("input[data-testid='ContactName']")
@@ -106,8 +112,16 @@ class BookingPage(BasePageClass):
         phone_number_field.clear_field()
         phone_number_field.insert_text(phone_number)
 
-    def select_booking_days(self, number_of_days):
-        pass
+    """TODO: instead of first/last element work on div.rbc-date-cell day number text"""
+
+    def select_booking_days(self):
+        action_builder = ActionChains(self.driver)
+        date_elements = BaseElement(
+            self.driver, self.to_date_locator
+        ).get_all_elements()
+        from_date = BaseElement(self.driver, self.from_date_locator).element
+        to_date = date_elements[1] if datetime.now().day > 16 else date_elements[-1]
+        action_builder.drag_and_drop(from_date, to_date).perform()
 
     def submit_booking_form(self):
         book_button = BaseElement(self.driver, self.book_button_locator)
